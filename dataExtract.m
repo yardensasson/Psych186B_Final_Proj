@@ -105,5 +105,87 @@ end
 abs = cell2mat(HOF_career_totals(:,6)); % number of at bats 
 pitcher_inds = find(abs < 500); % pitchers with less than 500 
 HOF_career_totals(pitcher_inds,:)=[]; %Removes all pitchers approx
+
+
+% ------------- Postseason --------------
+count = 0;
+HOF_batting_post = cell(1,22);
+for i = 1:size(id_vector,1)
+    currName = id_vector(i);
+    for j = 1:size(postseason_batting,1)
+        if strcmp(postseason_batting{j,3},currName)
+            count = count + 1;
+            for col_fill = 1:22
+                HOF_batting_post{count,col_fill} = postseason_batting{j,col_fill};
+            end
+        end
+    end
+end
+
+% add postseason data to overall data 
+currPlayerVec = cell(1,1);
+for i = 1:size(HOF_career_totals,1) % iterate through the list of names 
+    currName = HOF_career_totals{i,1};
+    count = 0;
+    games = 0;
+    ab = 0;
+    runs = 0;
+    hits = 0;
+    doubles = 0;
+    triples = 0;
+    hr = 0;
+    rbi = 0;
+    sb = 0;
+    bb = 0;
+    ibb = 0;
+    for j = 1:size(HOF_batting_post,1) % iterate through all seasons for all players
+        if strcmp(HOF_batting_post{j,3},currName)
+            count = count + 1;
+            games = games + HOF_batting_post{j,6};
+            ab = ab + HOF_batting_post{j,7};
+            runs = runs + HOF_batting_post{j,8};
+            hits = hits + HOF_batting_post{j,9};
+            doubles = doubles + HOF_batting_post{j,10};
+            triples = triples + HOF_batting_post{j,11};
+            hr = hr + HOF_batting_post{j,12};
+            rbi = rbi + HOF_batting_post{j,13};
+            sb = sb + HOF_batting_post{j,14};
+            bb = bb + HOF_batting_post{j,16};
+            ibb = ibb + HOF_batting_post{j,18};
+        end
+    end
+    currPlayerVec{i,1} = currName;
+    currPlayerVec{i,2} = count; % years played
+    currPlayerVec{i,3} = games; % total num games played
+    currPlayerVec{i,4} = ab;
+    currPlayerVec{i,5} = runs;
+    currPlayerVec{i,6} = hits;
+    currPlayerVec{i,7} = doubles;
+    currPlayerVec{i,8} = triples;
+    currPlayerVec{i,9} = hr;
+    currPlayerVec{i,10} = rbi;
+    currPlayerVec{i,11} = sb;
+    currPlayerVec{i,12} = bb;
+    currPlayerVec{i,13} = ibb;
+    for k=1:13
+        HOF_career_totals(i,k+13) = currPlayerVec(i,k); % add postseason data to each player's row
+    end
+     clear currPlayerVec;
+end
+
+HOF_career_totals(:,14) = []; % remove player id from duplication
+
+
+% ---------------- Awards ------------------
+% trim the award data set to just players we want
+for i = 1:size(HOF_career_totals,1)
+    currName = HOF_career_totals{i,1};
+    for j = 1:size(Awards_list,1)
+        if strcmp(Awards_list{j,1},currName)
+            % dont trim; else trim
+    
+
+
+
     
 
