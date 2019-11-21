@@ -178,14 +178,27 @@ HOF_career_totals(:,14) = []; % remove player id from duplication
 
 % ---------------- Awards ------------------
 % trim the award data set to just players we want
+HOF_awards = cell(1,6);
+count = 0;
 for i = 1:size(HOF_career_totals,1)
     currName = HOF_career_totals{i,1};
     for j = 1:size(Awards_list,1)
         if strcmp(Awards_list{j,1},currName)
-            % dont trim; else trim
-    
+            count = count + 1;
+            HOF_awards(count,:) = Awards_list(j,:);
+        end
+    end
+end
 
-
-
-    
-
+% add awards to the big dataset
+awards = {'Most Valuable Player','Gold Glove','ALCS MVP','NLCS MVP','World Series MVP','Silver Slugger','All-Star Game MVP','Triple Crown'};
+for i = 1:size(HOF_career_totals,1)
+    currPlayer = HOF_career_totals{i,1};
+    currPlayerAwards = zeros(1,8);
+    for j = 1:size(HOF_awards,1)
+        if strcmp(HOF_awards{j,1},currPlayer)
+            currPlayerAwards = currPlayerAwards + strcmp(awards,HOF_awards{j,2});
+        end
+    end
+    HOF_career_totals{i,26} = currPlayerAwards;
+end
