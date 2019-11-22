@@ -103,7 +103,7 @@ for i = 1:size(id_vector,1) % iterate through the list of names
 end
         
 abs = cell2mat(HOF_career_totals(:,6)); % number of at bats 
-pitcher_inds = find(abs < 500); % pitchers with less than 500 
+pitcher_inds = find(abs < 1000); % pitchers with less than 500 
 HOF_career_totals(pitcher_inds,:)=[]; %Removes all pitchers approx
 
 
@@ -210,3 +210,35 @@ for i = 1:size(HOF_career_totals,1)
     HOF_career_totals{i,33} = currPlayerAwards(8); %Triple Crown
 end
 
+
+% ------------------- All Star Game --------------------
+for i = 1:size(HOF_career_totals,1)
+    currPlayer = HOF_career_totals{i,1};
+    count = 0;
+    for j = 1:size(All_Star_List,1)
+        if strcmp(All_Star_List{j,1},currPlayer)
+            count = count + 1;
+        end
+    end
+    HOF_career_totals{i,34} = count; % store num of all star games
+end
+
+
+% ------------------- Hall of Fame (yes or no) --------------------
+for i = 1:size(HOF_career_totals,1)
+    currPlayer = HOF_career_totals{i,1};
+    for j = 1:size(HOF_players)
+        if strcmp(HOF_players{j,1},currPlayer)
+            if strcmp(HOF_players{j,7},'Y')
+                HOF_career_totals{i,35} = 1;
+            else
+                HOF_career_totals{i,35} = 0;
+            end
+        end
+    end
+end
+
+
+% ---------------- Names ---------------------
+% for i = 1:size(HOF_career_totals)
+%     currPlayer = HOF_career_totals{i,1};
