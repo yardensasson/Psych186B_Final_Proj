@@ -200,5 +200,13 @@ for i = 1:size(HOF_career_totals,1)
             currPlayerAwards = currPlayerAwards + strcmp(awards,HOF_awards{j,2});
         end
     end
-    HOF_career_totals{i,26} = currPlayerAwards;
+    HOF_career_totals{i,26} = currPlayerAwards(1); %MVP
+    HOF_career_totals{i,27} = currPlayerAwards(2); %Gold Glove
+    HOF_career_totals{i,28} = currPlayerAwards(3); %ALCS MVP
+    HOF_career_totals{i,29} = currPlayerAwards(4); %NLCS MVP
+    HOF_career_totals{i,30} = currPlayerAwards(5); %World Series MVP
+    HOF_career_totals{i,31} = currPlayerAwards(6); %Silver Slugger
+    HOF_career_totals{i,32} = currPlayerAwards(7); %All Star Game MVP
+    HOF_career_totals{i,33} = currPlayerAwards(8); %Triple Crown
 end
+
