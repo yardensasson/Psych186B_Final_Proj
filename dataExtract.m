@@ -8,6 +8,8 @@ All_Star_List(1,:) = [];
 Awards_list(1,:) = [];
 [~,~,postseason_batting] = xlsread('BattingPost.xls');
 postseason_batting(1,:) = [];
+[~,~,names] = xlsread('People.xls');
+names(1,:) = [];
 
 
 % Extract only players
@@ -240,5 +242,23 @@ end
 
 
 % ---------------- Names ---------------------
-% for i = 1:size(HOF_career_totals)
-%     currPlayer = HOF_career_totals{i,1};
+name_info = cell(size(HOF_career_totals,1),3); % cell to store names to insert
+
+for i = 1:size(HOF_career_totals,1)
+    currPlayer = HOF_career_totals{i,1};
+    for j = 1:size(names,1)
+        if strcmp(names{j,1},currPlayer)
+            name_info{i,1} = names{j,14}; % first
+            name_info{i,2} = names{j,15}; % last
+            name_info{i,3} = names{j,2}; % birth year
+        end
+    end
+end
+
+HOF_career_totals = [HOF_career_totals(:,1) name_info HOF_career_totals(:,2:35)]; % insert name_info to major cell array
+
+
+
+% EXPORT DATA TO EXCEL FILE
+total = cell2table(HOF_career_totals);
+writetable(total, 'training_data.xls');
