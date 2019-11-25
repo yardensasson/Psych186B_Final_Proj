@@ -8,7 +8,7 @@ All_Star_List(1,:) = [];
 Awards_list(1,:) = [];
 [~,~,postseason_batting] = xlsread('BattingPost.xls');
 postseason_batting(1,:) = [];
-[~,~,names] = xlsread('People.xls');
+[~,~,names] = xlsread('People.xlsx');
 names(1,:) = [];
 
 
@@ -261,4 +261,4 @@ HOF_career_totals = [HOF_career_totals(:,1) name_info HOF_career_totals(:,2:35)]
 
 % EXPORT DATA TO EXCEL FILE
 total = cell2table(HOF_career_totals);
-writetable(total, 'training_data.xls');
+writetable(total, 'training_data.xlsx');
